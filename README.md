@@ -119,8 +119,8 @@ Initialize the Kubernetes Cluster using Kubeadm command
 sudo kubeadm init --pod-network-cidr=10.244.10.0/16 --apiserver-advertise-address=192.168.50.10 --kubernetes-version "1.17.0"
 ```
 
-*** --apiserver-advertise-address*** = *determines which IP address Kubernetes should advertise its API server on.*
-*** --pod-network-cidr*** = *specify the range of IP addresses for the pod network. We're using the 'flannel' virtual network. If you want to use another pod network such as weave-net or calico, change the range IP address.*
+***--apiserver-advertise-address*** = *determines which IP address Kubernetes should advertise its API server on.*
+***--pod-network-cidr*** = *specify the range of IP addresses for the pod network. We're using the 'flannel' virtual network. If you want to use another pod network such as weave-net or calico, change the range IP address.*
 
 
 To avoid following warning while running pre-flight checks
@@ -128,7 +128,7 @@ To avoid following warning while running pre-flight checks
   [WARNING IsDockerSystemdCheck]: detected "cgroupfs" as the Docker cgroup driver. The recommended driver is "systemd". Please follow the guide at https://kubernetes.io/docs/setup/cri/
 ```
 
-Edit docker executable under /lib/systemd/system/docker.service, look for the line ***ExecStart*** and add --exec-opt native.cgroupdriver=systemd
+Edit docker executable under ***/lib/systemd/system/docker.service***, look for the line ***ExecStart*** and add ***--exec-opt native.cgroupdriver=systemd***
 
 ```
 ....
@@ -145,7 +145,7 @@ systemctl stop docker
 systemctl start docker
 ```
 
-In order to use the Kubenetes, require to run commands from the *kubeadm init... * result command
+In order to use the Kubenetes, require to run commands from the *kubeadm init...* result command
 
 ```
 mkdir -p $HOME/.kube
