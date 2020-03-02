@@ -153,3 +153,94 @@ mkdir -p $HOME/.kube
 sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
 sudo chown $(id -u):$(id -g) $HOME/.kube/config
 ```
+Deploy the ***flannel network*** to the kubernetes cluster using *kubectl* command
+
+```
+kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml
+```
+
+Check after a minute to see nodes and pods
+```
+kubectl get nodes
+kubectl get pods --all-namespaces
+```
+
+### Adding Worker nodes to kubernetes Cluster
+
+Create a new token using kubeadm. By using the –print-join-command argument kubeadm will output the token and SHA hash required to securely communicate with the master
+
+```
+kubeadm token create --print-join-command
+```
+
+Paste the kubeadm join command to both the worker nodes
+```
+kubeadm join 192.168.50.10:6443 --token ucqvm7.9agh2kb8rlpqj41a     --discovery-token-ca-cert-hash sha256:30662c63788ee553c670b179acb3ac9e4b7eb59f4888e48ac63b4ff736a867b2 
+```
+
+Wait for some minutes and back to the 'k8s-master' node and check the node status
+
+```
+kubectl get nodes
+```
+
+### Deploy Nginx web server on Kubernetes Cluster
+
+Create a new directory named 'nginx' and go to that directory
+
+```
+mkdir -p nginx/
+cd nginx/
+```
+
+Create Nginx deployment file ***nginx-deployent.yaml*** with following configurations 
+
+```
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-deployment
+  labels:
+    app: nginx
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:1.14.0
+        ports:
+        - containerPort: 80
+```
+
+Create nginx deployment using ***kubectl*** command
+
+```
+kubectl create -f nginx-deployment.yaml
+```
+
+Check the deployment list inside the cluster
+```
+kubectl get deployments
+
+NAME               READY   UP-TO-DATE   AVAILABLE   AGE
+nginx-deployment   3/3     3            3           93s
+
+```
+
+Check the kubernetes Pods and details of individual pod
+
+```
+kubectl get pods
+
+NAME                                READY   STATUS    RESTARTS   AGE
+nginx-deployment-7f555c9b4b-544s7   1/1     Running   0          79s
+nginx-deployment-7f555c9b4b-696s5   1/1     Running   0          79s
+nginx-deployment-7f555c9b4b-mc88k   1/1     Running   0          79s
+```
