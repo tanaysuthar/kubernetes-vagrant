@@ -71,3 +71,42 @@ To disable the SWAP permanently, edit /etc/fstab file by commenting the SWAP par
 ```
 #/dev/mapper/vagrant--vg-swap_1 none            swap    sw              0       0
 ```
+
+### Install kubeadm, kubelet and kubectl
+
+**kubeadm:** *the command to bootstrap the cluster.*
+
+**kubelet:** *the component that runs on all of the machines in your cluster and does things like starting pods and containers.*
+
+**kubectl:** *the command line util to talk to your cluster.*
+
+Ref: https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/install-kubeadm/
+
+Install apt-transport-https
+
+```
+sudo apt install -y apt-transport-https
+```
+
+Add the Kubernetes Key
+
+```
+curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -
+```
+
+Add the Kubernetes repository under /etc/apt/sources.list.d/
+
+```
+vi kubernetes.list
+```
+
+Paste below repository
+```
+deb http://apt.kubernetes.io/ kubernetes-xenial main
+```
+
+Update the repository and install packages
+```
+sudo apt update
+sudo apt install -y kubeadm kubectl kubelet
+```
