@@ -244,3 +244,71 @@ nginx-deployment-7f555c9b4b-544s7   1/1     Running   0          79s
 nginx-deployment-7f555c9b4b-696s5   1/1     Running   0          79s
 nginx-deployment-7f555c9b4b-mc88k   1/1     Running   0          79s
 ```
+
+Create Nginx service file nginx-service.yaml
+
+```
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-service
+  labels:
+    run: nginx-service
+spec:
+  type: NodePort
+  ports:
+  - port: 80
+    protocol: TCP
+  selector:
+    app: nginx
+```
+
+Create Nginx service using kubectl command
+
+```
+kubectl create -f nginx-service.yaml
+```
+
+Check all available services on the cluster and get the **nginx-service** on the list
+
+```
+kubectl get service
+
+NAME            TYPE        CLUSTER-IP     EXTERNAL-IP   PORT(S)        AGE
+kubernetes      ClusterIP   10.96.0.1      <none>        443/TCP        134m
+nginx-service   NodePort    10.96.74.173   <none>        80:32763/TCP   14m
+```
+
+Check using curl command to all worker nodes
+
+```
+curl node1:32763
+
+
+<!DOCTYPE html>
+<html>
+<head>
+<title>Welcome to nginx!</title>
+<style>
+    body {
+        width: 35em;
+        margin: 0 auto;
+        font-family: Tahoma, Verdana, Arial, sans-serif;
+    }
+</style>
+</head>
+<body>
+<h1>Welcome to nginx!</h1>
+<p>If you see this page, the nginx web server is successfully installed and
+working. Further configuration is required.</p>
+
+<p>For online documentation and support please refer to
+<a href="http://nginx.org/">nginx.org</a>.<br/>
+Commercial support is available at
+<a href="http://nginx.com/">nginx.com</a>.</p>
+
+<p><em>Thank you for using nginx.</em></p>
+</body>
+</html>
+
+```
