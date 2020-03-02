@@ -43,3 +43,31 @@ ping node1
 ping node2
 
 ```
+### Docker Installation
+
+Install Docker from the Ubuntu repository
+
+```
+sudo apt install docker.io -y
+```
+
+Start and enable docker service to launch everytime at system boot
+
+```
+sudo systemctl start docker
+sudo systemctl enable docker
+```
+
+### Disable SWAP 
+
+In order to setup Kubernetes Linux server, it's required to disable the SWAP. Check the SWAP and disable it
+
+```
+sudo swapon -s
+sudo swapoff -a
+```
+
+To disable the SWAP permanently, edit /etc/fstab file by commenting the SWAP partition type and ***reboot*** the system
+```
+#/dev/mapper/vagrant--vg-swap_1 none            swap    sw              0       0
+```
