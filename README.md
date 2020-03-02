@@ -139,7 +139,8 @@ ExecStart=/usr/bin/dockerd -H fd:// --containerd=/run/containerd/containerd.sock
 ```
 
 Reload the daemon and stop-start Docker service
-````
+
+```
 systemctl daemon-reload
 systemctl stop docker
 systemctl start docker
