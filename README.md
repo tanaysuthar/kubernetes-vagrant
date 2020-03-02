@@ -4,9 +4,7 @@ Deploy Nginx service under Kubernetes cluster with 3 Vagrant machines having fol
 - 1 master node (k8s-master)
 - 2 worker node (node1, node2)
 
-Each machine is having 2048 GB memory and 2 CPUs
-
-Here is the Vagrantfile for the ref:
+Each machine is having 2048 GB memory and 2 CPUs (check Vagrantfile)
 
 ### Start the hosts with following commands
 
