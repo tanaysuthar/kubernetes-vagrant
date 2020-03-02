@@ -1,10 +1,19 @@
-##Setup Kubernetes Cluster with Vagrant
+# Kubernetes Cluster Setup with Vagrant
 
-Check the status after running Vagrant Up command 
+Deploy Nginx service under Kubernetes cluster with 3 Vagrant machines having following 
+- 1 master node (k8s-master)
+- 2 worker node (node1, node2)
 
-$ vagrant status
-Current machine states:
+Each machine is having 2048 GB memory and 2 CPUs (Check Vagrantfile)
 
-k8s-master                running (virtualbox)
-node1                     running (virtualbox)
-node2                     running (virtualbox)
+Spin up the Vagrant hosts with following command
+
+```
+vagrant up
+```
+
+SSH to vagrant hosts
+```
+vagrant ssh << hostname >>
+```
+Hostname in our case: k8s-master, node1 and node2
